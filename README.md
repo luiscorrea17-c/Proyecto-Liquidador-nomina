@@ -32,14 +32,14 @@ Desarrollar una aplicación clara, funcional y bien estructurada que aplique los
 * Separación clara de responsabilidades
 * Código legible y modular
 ---
-## ¿Como lo hago funcionar?
+## Funcionamiento
 
 Ubicados en la carpeta raiz del proyecto, ejecute:
 ```
 py src/view/consola_liquidador.py
 ```
 ---
-## ¿Como está construido?
+## Construcción
 - carpeta docs: Contenido extra que posee la aplicación. Contiene archivos propios relacionados a la aplicación en general.
 - carpeta src: Codigo fuente de la aplicación. Posee subcarpetas que contienen las diferentes capas que permiten el funcionamiento general.
 - carpeta tests: Pruebas unitarias de la aplicación.
@@ -47,7 +47,7 @@ py src/view/consola_liquidador.py
 Cada carpeta posee __init__.py para que python reconozca cada una y pueda relacionar su respectivo import.
 
 ---
-## Uso
+## Ejecución de pruebas
 Para ejecutar las pruebas unitarias, dirijase la carpeta raiz y use el siguiente el comando:
 ```
 py tests\test_liquidador.py
