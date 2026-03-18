@@ -8,7 +8,9 @@ from model import logica_liquidador
 class TestCalculoSalario(unittest.TestCase):
 
     def test_normal1_salario(self):
-
+        """
+        test normal de la aplicación
+        """
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
             salario= 5000000,
@@ -30,7 +32,9 @@ class TestCalculoSalario(unittest.TestCase):
         self.assertEqual(salario_calculado, salario_esperado)
 
     def test_normal2_salario(self):
-
+        """
+        test normal de la aplicación
+        """
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
             salario= 6200000,
@@ -52,7 +56,9 @@ class TestCalculoSalario(unittest.TestCase):
         self.assertEqual(salario_calculado, salario_esperado)
 
     def test_normal3_salario(self):
-
+        """
+        test normal de la aplicación
+        """
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
             salario= 4500000,
@@ -74,7 +80,9 @@ class TestCalculoSalario(unittest.TestCase):
         self.assertEqual( salario_calculado, salario_esperado )
 
     def test_normal4_salario( self ):
-
+        """
+        test normal de la aplicación
+        """
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
             salario= 4000000,
@@ -97,6 +105,9 @@ class TestCalculoSalario(unittest.TestCase):
 
     # casos extraordinarios
     def test_empleado_no_trabajo(self):
+        """
+        test extraordinario que aunque el empleado no haya trabajado, sigue calculando con normalidad.
+        """
 
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
@@ -119,6 +130,9 @@ class TestCalculoSalario(unittest.TestCase):
         self.assertEqual(salario_calculado, salario_esperado)
 
     def test_salario_en_limite_de_impuestos(self):
+        """
+        test extraordinario que aunque los impuestos estén en el límite, sigue calculando con normalidad.
+        """
 
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
@@ -141,6 +155,10 @@ class TestCalculoSalario(unittest.TestCase):
         self.assertEqual(salario_calculado, salario_esperado)
 
     def test_salario_muy_alto(self):
+        """
+        test extraordinario que permite ingresar salarios altos y intervenir en el funcionamiento.
+        """
+
 
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
@@ -163,7 +181,9 @@ class TestCalculoSalario(unittest.TestCase):
         self.assertEqual(salario_calculado, salario_esperado)
 
     def test_ingresos_solo_por_auxilios(self):
-
+        """
+        test extraordinario que aunque solo se reciban auxilios, sigue calculando con normalidad.
+        """
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
             salario= 0,
@@ -185,7 +205,9 @@ class TestCalculoSalario(unittest.TestCase):
         self.assertEqual(salario_calculado, salario_esperado)
 
     def test_salario_obligatorio(self):
-
+        """
+        test que genera una excepción en caso de que no se ingrese un valor en el campo de salario.
+        """
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
             salario= "",
@@ -202,7 +224,9 @@ class TestCalculoSalario(unittest.TestCase):
             logica_liquidador.calcular_salario(liquidacion)
 
     def test_salario_tipo_invalido(self):
-
+        """
+        test que genera una excepción en caso de que se ingrese un campo inválido en el campo de salario.
+        """
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
             salario= "5000000",
@@ -219,7 +243,9 @@ class TestCalculoSalario(unittest.TestCase):
             logica_liquidador.calcular_salario( liquidacion )
 
     def test_salario_negativo(self):
-
+        """
+        test que genera una excepción en caso de que se ingrese un valor negativo en el campo de salario.
+        """
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
             salario= -1000,
@@ -236,7 +262,9 @@ class TestCalculoSalario(unittest.TestCase):
             logica_liquidador.calcular_salario( liquidacion )
 
     def test_salario_fuera_rango(self):
-
+        """
+        test que genera una excepción en caso de el salario este fuera del rango permitido.
+        """
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
             salario= 2_000_000_000,
@@ -253,7 +281,9 @@ class TestCalculoSalario(unittest.TestCase):
             logica_liquidador.calcular_salario( liquidacion )
 
     def test_porcentaje_fuera_rango(self):
-
+        """
+        test que genera una excepción en caso de los porcentajes estén fuera de los rangos legales.
+        """
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
             salario= 5000000,
