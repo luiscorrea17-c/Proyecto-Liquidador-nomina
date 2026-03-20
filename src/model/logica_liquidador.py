@@ -28,17 +28,17 @@ class ErrorTipoInvalido( Exception ):
             f"Se esperaba un número entero o decimal (int o float).")
 
 
-class ErrorSalarioNegativo( Exception ):
+class ErrorValorNegativo(Exception):
     """
-    Excepción personalizada para indicar que el salario es negativo.
+    Excepción personalizada para indicar que un campo tiene valor negativo.
 
-    Para usar esta excepción, indique el salario recibido:
-        ErrorSalarioNegativo( salario )
+    Para usar esta excepción, indique el / los campos que recibieron valores negativos
+        ErrorValorNegativo("salario", -500)
     """
-    def __init__( self, salario: float ):
+    def __init__(self, campo: str, valor: float):
         super().__init__(
-            f"[Salario negativo] "
-            f"El salario ingresado ({salario}) es negativo. "
+            f"[Valor negativo] "
+            f"El campo '{campo}' tiene un valor negativo ({valor}). "
             f"Ingrese un valor mayor o igual a 0.")
 
 
@@ -109,9 +109,20 @@ def _validar_tipo(liquidacion):
         raise ErrorTipoInvalido(liquidacion.salario)
 
 
-def _validar_salario_no_negativo(liquidacion):
-    if liquidacion.salario < 0:
-        raise ErrorSalarioNegativo(liquidacion.salario)
+def _validar_sin_negativos(liquidacion):
+    campos = {
+        "salario":liquidacion.salario,
+        "horas_extra":liquidacion.horas_extra,
+        "bonificaciones":liquidacion.bonificaciones,
+        "comisiones":liquidacion.comisiones,
+        "auxilios":liquidacion.auxilios,
+        "salud":liquidacion.salud,
+        "pension":liquidacion.pension,
+        "impuesto_dinero":liquidacion.impuesto_dinero,}
+    
+    for campo, valor in campos.items():
+        if valor < 0:
+            raise ErrorValorNegativo(campo, valor)
 
 
 def _validar_salario_en_rango(liquidacion):
@@ -139,7 +150,7 @@ def calcular_salario( liquidacion: LiquidacionSalario ) -> float:
     """
     _validar_campo_obligatorio(liquidacion)
     _validar_tipo(liquidacion)
-    _validar_salario_no_negativo(liquidacion)
+    _validar_sin_negativos(liquidacion)
     _validar_salario_en_rango(liquidacion)
     _validar_porcentajes(liquidacion)
 

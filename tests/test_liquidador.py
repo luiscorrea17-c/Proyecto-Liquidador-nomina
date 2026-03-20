@@ -242,23 +242,23 @@ class TestCalculoSalario(unittest.TestCase):
         with self.assertRaises(logica_liquidador.ErrorTipoInvalido):
             logica_liquidador.calcular_salario( liquidacion )
 
-    def test_salario_negativo(self):
+    def test_valor_negativo(self):
         """
-        test que genera una excepción en caso de que se ingrese un valor negativo en el campo de salario.
+        test que genera una excepción en caso de que se ingrese un valor negativo en algún campo.
         """
         # entradas
         liquidacion = logica_liquidador.LiquidacionSalario(
             salario= -1000,
-            horas_extra= 0,
-            bonificaciones= 0,
-            comisiones= 0,
-            auxilios= 0,
-            salud= 4,
-            pension= 4,
-            impuesto_dinero = 0)
+            horas_extra= -1000,
+            bonificaciones= -1000,
+            comisiones= -1000,
+            auxilios= -1000,
+            salud= -4,
+            pension= -4,
+            impuesto_dinero = -4)
 
         # verificar la salida
-        with self.assertRaises(logica_liquidador.ErrorSalarioNegativo):
+        with self.assertRaises(logica_liquidador.ErrorValorNegativo):
             logica_liquidador.calcular_salario( liquidacion )
 
     def test_salario_fuera_rango(self):

@@ -22,8 +22,7 @@ try:
         entrada_auxilios,
         entrada_salud,
         entrada_pension,
-        entrada_impuesto_dinero
-    ]
+        entrada_impuesto_dinero]
 
     indices_vacios = [i for i, valor in enumerate(campos) if valor == ""]
     
@@ -36,7 +35,7 @@ try:
             "auxilios", 
             "salud", 
             "pensión", 
-            "impuesto"]
+            "impuesto" ]
         
         campos_faltantes = [nombres_campos[i] for i in indices_vacios]
         raise ValueError(f"ERROR: Campos obligatorios vacíos: {', '.join(campos_faltantes)}")
