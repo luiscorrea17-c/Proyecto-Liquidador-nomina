@@ -229,7 +229,7 @@ class TestCalculoSalario(unittest.TestCase):
             impuesto_dinero = 0)
 
         # verificar la salida
-        with self.assertRaises(logica_liquidador.ErrorCampoObligatorio):
+        with self.assertRaises(logica_liquidador.errores.ErrorCampoObligatorio):
             logica_liquidador.calcular_salario(liquidacion)
 
     def test_salario_tipo_invalido(self):
@@ -248,7 +248,7 @@ class TestCalculoSalario(unittest.TestCase):
             impuesto_dinero= 0)
 
         # verificar la salida
-        with self.assertRaises(logica_liquidador.ErrorTipoInvalido):
+        with self.assertRaises(logica_liquidador.errores.ErrorTipoInvalido):
             logica_liquidador.calcular_salario( liquidacion )
 
     def test_valor_negativo(self):
@@ -267,7 +267,7 @@ class TestCalculoSalario(unittest.TestCase):
             impuesto_dinero = -4)
 
         # verificar la salida
-        with self.assertRaises(logica_liquidador.ErrorValorNegativo):
+        with self.assertRaises(logica_liquidador.errores.ErrorValorNegativo):
             logica_liquidador.calcular_salario( liquidacion )
 
     def test_salario_fuera_rango(self):
@@ -286,7 +286,7 @@ class TestCalculoSalario(unittest.TestCase):
             impuesto_dinero = 0)
 
         # verificar la salida
-        with self.assertRaises( logica_liquidador.ErrorSalarioGrande ):
+        with self.assertRaises( logica_liquidador.errores.ErrorSalarioGrande ):
             logica_liquidador.calcular_salario( liquidacion )
 
     def test_porcentaje_fuera_rango(self):
@@ -305,7 +305,7 @@ class TestCalculoSalario(unittest.TestCase):
             impuesto_dinero= 0)
 
         # verificar la salida
-        with self.assertRaises( logica_liquidador.ErrorPorcentajesFueraRango ):
+        with self.assertRaises( logica_liquidador.errores.ErrorPorcentajesFueraRango ):
             logica_liquidador.calcular_salario( liquidacion )
 
 
