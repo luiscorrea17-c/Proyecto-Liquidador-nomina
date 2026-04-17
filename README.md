@@ -4,6 +4,7 @@
 ## Autores
 
 * **Luis Alejandro Correa Arrieta**
+* **Juan Felipe Santiago Pinzon**
 
 ---
 
