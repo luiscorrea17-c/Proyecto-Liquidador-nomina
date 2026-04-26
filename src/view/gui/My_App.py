@@ -3,75 +3,141 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.gridlayout import GridLayout
-from kivy.core.window import Window # Nuevo: Para el color de fondo
+from kivy.core.window import Window
+from kivy.graphics import Color, Line
 import sys
 
 sys.path.append('src')
 from model import logica_liquidador 
 
-# Cambiamos el color de fondo de la ventana (Gris muy oscuro casi negro)
-Window.clearcolor = (0.12, 0.12, 0.12, 1)
+Window.clearcolor = (1, 1, 1, 1)
 
 class liquidador_nomina(App):
+
     def build(self):
-        # Aumentamos el padding para que no se vea pegado a los bordes
-        self.layout = GridLayout(cols=2, padding=30, spacing=15)
+        main_layout = GridLayout(cols=1, padding=30, spacing=20)
 
-        # Usamos input_filter='float' para que el ejecutable sea más robusto (evita letras)
-        self.salario_input = TextInput(hint_text='Salario mensual', multiline=False, input_filter='float')
-        self.extras_input = TextInput(hint_text='Valor horas extra', multiline=False, input_filter='float')
-        self.bonificaciones_input = TextInput(hint_text='Valor bonificaciones', multiline=False, input_filter='float')
-        self.comisiones_input = TextInput(hint_text='Valor comisiones', multiline=False, input_filter='float')
-        self.auxilios_input = TextInput(hint_text='Valor auxilios', multiline=False, input_filter='float')
-        self.salud_input = TextInput(hint_text='Porcentaje salud (ej: 4)', multiline=False, input_filter='float')
-        self.pension_input = TextInput(hint_text='Porcentaje pensión (ej: 4)', multiline=False, input_filter='float')
-        self.impuesto_input = TextInput(hint_text='Valor impuestos', multiline=False, input_filter='float')
+        titulo = Label(
+            text='Calculadora de Liquidación de Nómina',
+            font_size=22,
+            bold=True,
+            size_hint_y=None,
+            height=40,
+            color=(0.1, 0.2, 0.4, 1)
+        )
+        main_layout.add_widget(titulo)
 
+        layout = GridLayout(cols=2, spacing=12, size_hint_y=None)
+        layout.bind(minimum_height=layout.setter('height'))
 
-        # Agregamos las etiquetas y los cuadros de texto uno por uno
-        self.layout.add_widget(Label(text='Salario mensual:'))
-        self.layout.add_widget(self.salario_input)
+        def estilo_label(text):
+            lbl = Label(
+                text=text,
+                color=(0, 0, 0, 1),
+                size_hint_y=None,
+                height=45
+            )
+            with lbl.canvas.after:
+                lbl.border_color = Color(0.3, 0.6, 1, 1)
+                lbl.border_line = Line(width=1.2)
+            def update_border(*args):
+                lbl.border_line.rectangle = (
+                    lbl.x, lbl.y,
+                    lbl.width, lbl.height
+                )
+            lbl.bind(pos=update_border, size=update_border)
+            return lbl
 
-        self.layout.add_widget(Label(text='Horas extra:'))
-        self.layout.add_widget(self.extras_input)
+        def estilo_input(hint):
+            input_box = TextInput(
+                hint_text=hint,
+                multiline=False,
+                input_filter='float',
+                size_hint_y=None,
+                height=45,
+                background_normal='',
+                background_color=(0.95, 0.95, 0.95, 1),
+                foreground_color=(0, 0, 0, 1),
+                cursor_color=(0.2, 0.5, 0.9, 1)
+            )
+            with input_box.canvas.after:
+                input_box.border_color = Color(0.7, 0.7, 0.7, 1)
+                input_box.border_line = Line(width=1.2)
+            def update_border(*args):
+                input_box.border_line.rectangle = (
+                    input_box.x, input_box.y,
+                    input_box.width, input_box.height
+                )
+            def on_focus(instance, value):
+                if value:
+                    input_box.border_color.rgb = (0.2, 0.5, 1)
+                    input_box.border_line.width = 2
+                else:
+                    input_box.border_color.rgb = (0.7, 0.7, 0.7)
+                    input_box.border_line.width = 1.2
+            input_box.bind(pos=update_border, size=update_border)
+            input_box.bind(focus=on_focus)
+            return input_box
 
-        self.layout.add_widget(Label(text='Bonificaciones:'))
-        self.layout.add_widget(self.bonificaciones_input)
+        self.salario_input = estilo_input('2000000')
+        self.extras_input = estilo_input('100000')
+        self.bonificaciones_input = estilo_input('50000')
+        self.comisiones_input = estilo_input('30000')
+        self.auxilios_input = estilo_input('100000')
+        self.salud_input = estilo_input('1 - 4')
+        self.pension_input = estilo_input('1 - 4')
+        self.impuesto_input = estilo_input('50000')
 
-        self.layout.add_widget(Label(text='Comisiones:'))
-        self.layout.add_widget(self.comisiones_input)
+        layout.add_widget(estilo_label('Salario'))
+        layout.add_widget(self.salario_input)
 
-        self.layout.add_widget(Label(text='Auxilios:'))
-        self.layout.add_widget(self.auxilios_input)
+        layout.add_widget(estilo_label('Horas extra'))
+        layout.add_widget(self.extras_input)
 
-        self.layout.add_widget(Label(text='Salud (1% - 4%):'))
-        self.layout.add_widget(self.salud_input)
+        layout.add_widget(estilo_label('Bonificaciones'))
+        layout.add_widget(self.bonificaciones_input)
 
-        self.layout.add_widget(Label(text='Pensión (1% - 4%):'))
-        self.layout.add_widget(self.pension_input)
+        layout.add_widget(estilo_label('Comisiones'))
+        layout.add_widget(self.comisiones_input)
 
-        self.layout.add_widget(Label(text='Impuestos:'))
-        self.layout.add_widget(self.impuesto_input)
+        layout.add_widget(estilo_label('Auxilios'))
+        layout.add_widget(self.auxilios_input)
 
-        # Botón con un color azul para que se vea profesional en el ejecutable
+        layout.add_widget(estilo_label('Salud (%)'))
+        layout.add_widget(self.salud_input)
+
+        layout.add_widget(estilo_label('Pensión (%)'))
+        layout.add_widget(self.pension_input)
+
+        layout.add_widget(estilo_label('Impuestos'))
+        layout.add_widget(self.impuesto_input)
+
+        main_layout.add_widget(layout)
+
         self.button = Button(
-            text='Calcular Nómina',
-            background_color=(0.2, 0.5, 0.8, 1),
+            text='CALCULAR',
+            size_hint_y=None,
+            height=55,
+            background_normal='',
+            background_color=(0.2, 0.6, 1, 1),
+            color=(1, 1, 1, 1),
             bold=True
         )
         self.button.bind(on_press=self.calcular_nomina)
-        
-        # Etiqueta para el resultado
-        self.result_label = Label(text='Ingrese los datos y presione calcular', bold=True)
-        
-        self.layout.add_widget(self.button)
-        self.layout.add_widget(self.result_label)
+        main_layout.add_widget(self.button)
 
-        return self.layout
+        self.result_label = Label(
+            text='Resultado aparecerá aquí',
+            size_hint_y=None,
+            height=40,
+            color=(0, 0, 0, 1)
+        )
+        main_layout.add_widget(self.result_label)
+
+        return main_layout
 
     def calcular_nomina(self, instance):
         try:
-            # Convertimos los valores a números (si están vacíos ponemos 0)
             salario = float(self.salario_input.text or 0)
             extras = float(self.extras_input.text or 0)
             bonificaciones = float(self.bonificaciones_input.text or 0)
@@ -81,24 +147,20 @@ class liquidador_nomina(App):
             pension = float(self.pension_input.text or 0)
             impuesto = float(self.impuesto_input.text or 0)
 
-            # --- CONDICIONALES DE CONTROL ---
-            # Si salud es menor a 1 o mayor a 4
             if salud < 1 or salud > 4:
-                self.result_label.text = "Error: Salud debe estar entre 1 y 4"
-                self.result_label.color = (1, 0, 0, 1) # Rojo
-                return # Salimos para que no siga calculando
+                self.result_label.text = "Error en salud"
+                self.result_label.color = (1, 0, 0, 1)
+                return
 
-            # Si pensión es menor a 1 o mayor a 4
             if pension < 1 or pension > 4:
-                self.result_label.text = "Error: Pensión debe estar entre 1 y 4"
-                self.result_label.color = (1, 0, 0, 1) # Rojo
-                return # Salimos para que no siga calculando
+                self.result_label.text = "Error en pensión"
+                self.result_label.color = (1, 0, 0, 1)
+                return
 
-            # Si todo está bien, calculamos
             salario_total = logica_liquidador.LiquidacionSalario(
                 salario=salario,
                 horas_extra=extras,
-                bonificaciones=bonificaciones, 
+                bonificaciones=bonificaciones,
                 comisiones=comisiones,
                 auxilios=auxilios,
                 salud=salud,
@@ -107,14 +169,14 @@ class liquidador_nomina(App):
             )
 
             salario_neto = logica_liquidador.calcular_salario(salario_total)
-            
-            # Formateamos el número para que sea legible ($1,000,000.00)
-            self.result_label.color = (1, 1, 1, 1) # Blanco
-            self.result_label.text = f"El salario neto es: ${salario_neto:,.2f}"
 
-        except ValueError:
-            self.result_label.text = "Por favor, use solo números"
+            self.result_label.color = (0, 0.6, 0, 1)
+            self.result_label.text = f"${salario_neto:,.2f}"
+
+        except:
+            self.result_label.text = "Error en datos"
             self.result_label.color = (1, 0, 0, 1)
+
 
 if __name__ == '__main__':
     liquidador_nomina().run()
