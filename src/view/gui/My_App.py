@@ -10,6 +10,7 @@ import sys
 import os
 import sys
 
+<<<<<<< HEAD
 # Esto detecta si corre como .py o como .exe
 if hasattr(sys, '_MEIPASS'):
     base_path = sys._MEIPASS
@@ -21,6 +22,8 @@ sys.path.append(os.path.join(base_path, 'src'))
 
 from model import logica_liquidador
 
+=======
+>>>>>>> 37bc36d8301c583c4a319f30526b24865c79487b
 Window.clearcolor = (1, 1, 1, 1)
 
 class liquidador_nomina(App):
