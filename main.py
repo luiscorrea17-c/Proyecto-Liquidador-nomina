@@ -1,6 +1,16 @@
 import os
 import sys
 
+
+# Obtener la ruta donde se está ejecutando la App en Android
+current_path = os.path.dirname(os.path.abspath(__file__))
+src_path = os.path.join(current_path, 'src')
+
+# Añadir src al path solo si no está ya
+if src_path not in sys.path:
+    sys.path.append(src_path)
+
+
 # Configuración de rutas para el ejecutable (.exe)
 if hasattr(sys, '_MEIPASS'):
     # Carpeta temporal de PyInstaller
