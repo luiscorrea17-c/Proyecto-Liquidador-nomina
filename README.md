@@ -193,6 +193,27 @@ Desarrollar una aplicación clara, funcional y bien estructurada que aplique los
 
 ---
 
+## 📝 Descripción del Proyecto
+El **Liquidador de Nómina** permite calcular con precisión el valor neto a pagar a un trabajador, procesando de manera independiente los ingresos y los descuentos:
+
+1.  **Valores Devengados:** Salario base, horas extra (recargos), bonificaciones, comisiones y auxilios (transporte/otros).
+2.  **Deducciones de Ley:** Descuentos obligatorios de salud, pensión e impuestos aplicables.
+
+**Objetivo Técnico:** Desarrollar una aplicación clara y bien estructurada que aplique los principios de modularidad, validación de datos y legibilidad para entregar una herramienta funcional y fácil de mantener.
+
+---
+
+## 🚀 Guía de Ejecución y Despliegue
+
+### 1. Ejecución desde Código Fuente (Consola)
+Ideal para entornos de desarrollo y depuración rápida de la lógica de negocio.
+* **Prerrequisito:** Python 3.8 o superior instalado en el sistema.
+* **Comando de ejecución:**
+  ```bash
+  python src/view/consola_liquidador.py
+
+---
+
 ## Requisitos del sistema
 
 - Python **3.8 o superior**
